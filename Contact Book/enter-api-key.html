@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>API Key</title>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Please enter a valid API key.</div> 
+        <form>
+            <input type="nathanealgordon@gmail.com" id="apiKey"/>
+            <button id="submitApiKey" type="button">Submit</button> 
+        </form>
+
+        <script>
+            const rootPath = "https://mysite.itvarsity.org/api/ContactBook/";
+            document.getElementById("submitApiKey").addEventListener('click', setApiKey);
+
+            function setApiKey(e) {
+                e.preventDefault(); 
+
+                const apiKey = document.getElementById("apiKey").value; 
+                const url = `${rootPath}controller/api-key/?apiKey=${encodeURIComponent(apiKey)}`; 
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data === "1") { 
+                            localStorage.setItem("apiKey", apiKey); 
+                            window.location.href = "index.html"; 
+                        } else {
+                            alert("Invalid API Key entered"); 
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Fetch error:", error);
+                        alert("Network error occurred");
+                    });
+            }
+        </script>
+    </body>
+</html>
+    </body>
+</html>
